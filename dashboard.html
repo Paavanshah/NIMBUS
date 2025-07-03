@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIMBUS Dashboard</title>
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <style>
+    /* Custom styles for a dark theme dashboard */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .led {
+      transition: background-color 0.3s ease;
+    }
+    .chart-container {
+      background-color: #1f2937; /* gray-800 */
+      border-radius: 0.75rem; /* rounded-xl */
+      padding: 1.5rem; /* p-6 */
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+  <div class="container mx-auto p-4 md:p-8">
+    <!-- Header Section -->
+    <header class="mb-8 text-center flex justify-between items-center">
+      <nav class="flex space-x-4">
+        <a href="index.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300">
+          Home
+        </a>
+        <a href="team.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300">
+          Our Team
+        </a>
+        <a href="blogs.html" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300">
+          Blogs/News
+        </a>
+      </nav>
+      <h1 class="text-4xl font-bold text-white mb-2 flex-grow">NIMBUS Dashboard</h1>
+      <p class="text-gray-400 sr-only">Real-time data visualization from NIMBUS</p> <!-- Hidden on small screens -->
+    </header>
+    <p class="text-gray-400 text-center -mt-6 mb-8 block md:hidden">Real-time data visualization from NIMBUS</p>
+
+
+    <!-- NEW: Error Banner -->
+    <div id="error-banner" class="hidden bg-red-600 border border-red-700 text-white font-bold p-4 rounded-lg mb-8 text-center">
+      <span id="error-message"></span>
+    </div>
+
+    <!-- Control Panel -->
+    <div class="bg-gray-800 rounded-xl shadow-lg p-6 mb-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+      <div class="flex items-center space-x-4">
+        <button id="connect" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300">
+          Connect to Device
+        </button>
+        <button id="download" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300">
+          Download CSV
+        </button>
+      </div>
+      <div id="status-panel" class="flex items-center space-x-6">
+          <div class="flex items-center space-x-2">
+              <span id="connection-status" class="h-4 w-4 rounded-full bg-red-500 animate-pulse"></span>
+              <span id="connection-text">Disconnected</span>
+          </div>
+          <div class="flex items-center space-x-2">
+              <span>Red LED</span><span id="redLED" class="led h-5 w-5 rounded-full bg-gray-600"></span>
+          </div>
+          <div class="flex items-center space-x-2">
+              <span>Yellow LED</span><span id="yellowLED" class="led h-5 w-5 rounded-full bg-gray-600"></span>
+          </div>
+          <div class="flex items-center space-x-2">
+              <span>Blue LED</span><span id="blueLED" class="led h-5 w-5 rounded-full bg-gray-600"></span>
+          </div>
+      </div>
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="chart-container"><canvas id="temp1Chart"></canvas></div>
+      <div class="chart-container"><canvas id="hum1Chart"></canvas></div>
+      <div class="chart-container"><canvas id="temp2Chart"></canvas></div>
+      <div class="chart-container"><canvas id="hum2Chart"></canvas></div>
+      <div class="chart-container"><canvas id="o3Chart"></canvas></div>
+      <div class="chart-container"><canvas id="pressureChart"></canvas></div>
+      <div class="chart-container"><canvas id="altitudeChart"></canvas></div>
+      <div class="chart-container"><canvas id="rollChart"></canvas></div>
+      <div class="chart-container"><canvas id="pitchChart"></canvas></div>
+      <div class="chart-container lg:col-span-3"><canvas id="yawChart"></canvas></div>
+    </div>
+  </div>
+
+  <script>
+    // --- Global Variables ---
+    let port, reader;
+    let lineBuffer = '';
+    const MAX_DATA_POINTS = 50;
+    const csvRows = [["Timestamp", "Temp1_C", "Hum1_%", "Temp2_C", "Hum2_%", "O3_adc", "Pressure_hPa", "Altitude_m", "Roll", "Pitch", "Yaw", "Red_LED", "Yellow_LED", "Blue_LED", "Status"]];
+    const labels = [];
+    const charts = {};
+
+    // Chart configuration details
+    const chartConfigs = {
+      temp1Chart: { label: "Temperature 1 (°C)", color: "#F87171" },
+      hum1Chart: { label: "Humidity 1 (%)", color: "#60A5FA" },
+      temp2Chart: { label: "Temperature 2 (°C)", color: "#FBBF24" },
+      hum2Chart: { label: "Humidity 2 (%)", color: "#34D399" },
+      o3Chart: { label: "Ozone (ADC Reading)", color: "#A78BFA" },
+      pressureChart: { label: "Pressure (hPa)", color: "#22D3EE" },
+      altitudeChart: { label: "Altitude (m)", color: "#F472B6" },
+      rollChart: { label: "Roll", color: "#A3E635" },
+      pitchChart: { label: "Pitch", color: "#F97316" },
+      yawChart: { label: "Yaw", color: "#E5E7EB" }
+    };
+
+    /**
+     * Creates a new Chart.js instance and stores it.
+     */
+    function createChart(id, label, color) {
+      const ctx = document.getElementById(id).getContext("2d");
+      charts[id] = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: [],
+            borderColor: color,
+            backgroundColor: `${color}1A`,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 0,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: { legend: { labels: { color: '#D1D5DB' } } },
+          scales: {
+            x: { title: { display: true, text: "Time", color: '#9CA3AF' }, ticks: { color: '#9CA3AF' }, grid: { color: '#374151' } },
+            y: { title: { display: true, text: "Value", color: '#9CA3AF' }, ticks: { color: '#9CA3AF' }, grid: { color: '#374151' } }
+          }
+        }
+      });
+    }
+
+    /**
+     * Updates the connection status indicator UI.
+     */
+    function updateConnectionStatus(isConnected) {
+        const statusIndicator = document.getElementById('connection-status');
+        const statusText = document.getElementById('connection-text');
+        const connectButton = document.getElementById('connect');
+
+        if(isConnected) {
+            statusIndicator.classList.remove('bg-red-500', 'animate-pulse');
+            statusIndicator.classList.add('bg-green-500');
+            statusText.textContent = 'Connected';
+            connectButton.textContent = 'Disconnect';
+            connectButton.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+            connectButton.classList.add('bg-red-600', 'hover:bg-red-700');
+        } else {
+            statusIndicator.classList.remove('bg-green-500');
+            statusIndicator.classList.add('bg-red-500', 'animate-pulse');
+            statusText.textContent = 'Disconnected';
+            connectButton.textContent = 'Connect to Device';
+            connectButton.classList.remove('bg-red-600', 'hover:bg-red-700');
+            connectButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+        }
+    }
+
+    /**
+     * Handles a single line of comma-separated data from the serial port.
+     */
+    function handleData(line) {
+      const parts = line.split(',');
+      if (parts.length < 15) {
+        console.warn("Received incomplete data packet:", line);
+        return;
+      }
+
+      const [time, t1, h1, t2, h2, o3, pressure, altitude, roll, pitch, yaw, red, yellow, blue, status] = parts;
+      
+      const errorBanner = document.getElementById('error-banner');
+      const errorMessageEl = document.getElementById('error-message');
+      const trimmedStatus = status.trim();
+
+      if (trimmedStatus !== 'OK') {
+        errorMessageEl.textContent = `SYSTEM ALERT: ${trimmedStatus}`;
+        errorBanner.classList.remove('hidden');
+        document.getElementById("redLED").style.backgroundColor = "#EF4444"; // Red
+        document.getElementById("yellowLED").style.backgroundColor = "#4B5563"; // Gray
+        document.getElementById("blueLED").style.backgroundColor = "#4B5563"; // Gray
+      } else {
+        errorBanner.classList.add('hidden');
+        document.getElementById("redLED").style.backgroundColor = parseInt(red) ? "#EF4444" : "#4B5563"; // Red or Gray
+        document.getElementById("yellowLED").style.backgroundColor = parseInt(yellow) ? "#F59E0B" : "#4B5563"; // Yellow or Gray
+        document.getElementById("blueLED").style.backgroundColor = parseInt(blue) ? "#3B82F6" : "#4B5563"; // Blue or Gray
+      }
+
+      csvRows.push(parts);
+
+      labels.push(time);
+      if (labels.length > MAX_DATA_POINTS) {
+        labels.shift();
+      }
+
+      const values = { temp1Chart: t1, hum1Chart: h1, temp2Chart: t2, hum2Chart: h2, o3Chart: o3, pressureChart: pressure, altitudeChart: altitude, rollChart: roll, pitchChart: pitch, yawChart: yaw };
+      Object.keys(charts).forEach(id => {
+        const chart = charts[id];
+        const dataArray = chart.data.datasets[0].data;
+        dataArray.push(parseFloat(values[id]));
+        if (dataArray.length > MAX_DATA_POINTS) {
+          dataArray.shift();
+        }
+        chart.update('none');
+      });
+    }
+
+    /**
+     * Continuously reads from the serial port stream.
+     */
+    async function readLoop() {
+      try {
+        while (port && port.readable) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          lineBuffer += value;
+          let lines = lineBuffer.split('\n');
+          lineBuffer = lines.pop();
+          for (const line of lines) {
+            const trimmedLine = line.trim();
+            if (trimmedLine) handleData(trimmedLine);
+          }
+        }
+      } catch (error) {
+        console.error("Error during serial read:", error);
+        await disconnect();
+      }
+    }
+
+    /**
+     * Connects to the serial port and starts the read loop.
+     */
+    async function connect() {
+        try {
+            port = await navigator.serial.requestPort();
+            await port.open({ baudRate: 9600 });
+            const decoder = new TextDecoderStream();
+            port.readable.pipeTo(decoder.writable, { preventClose: true });
+            reader = decoder.readable.getReader();
+            updateConnectionStatus(true);
+            readLoop();
+        } catch (error) {
+            console.error("Failed to connect to the serial device.", error);
+            updateConnectionStatus(false);
+        }
+    }
+
+    /**
+     * Disconnects from the serial port.
+     */
+    async function disconnect() {
+        if (reader) {
+            try { await reader.cancel(); } catch (error) { /* Ignore */ }
+            reader.releaseLock();
+            reader = null;
+        }
+        if (port) {
+            try { await port.close(); } catch (error) { /* Ignore */ }
+            port = null;
+        }
+        updateConnectionStatus(false);
+    }
+
+    // --- Event Listeners ---
+    window.onload = () => {
+      for (const [id, config] of Object.entries(chartConfigs)) {
+        createChart(id, config.label, config.color);
+      }
+      updateConnectionStatus(false);
+    };
+
+    document.getElementById("connect").addEventListener("click", () => {
+        if (port) {
+            disconnect();
+        } else {
+            connect();
+        }
+    });
+
+    document.getElementById("download").addEventListener("click", () => {
+      if (csvRows.length <= 1) {
+        alert("No data to download yet. Please connect to a device first.");
+        return;
+      }
+      const csv = csvRows.map(row => row.join(",")).join("\n");
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `lora_data_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    navigator.serial.addEventListener('disconnect', (event) => {
+        if (port && event.port === port) {
+            disconnect();
+        }
+    });
+
+  </script>
+</body>
+</html>

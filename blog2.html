@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIMBUS Blog - Real-time Data Streaming Achieved</title>
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Inter font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #111827; /* Tailwind gray-900 */
+      color: #D1D5DB; /* Tailwind gray-300 */
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col">
+
+  <div class="container mx-auto p-4 md:p-8 flex-grow">
+    <!-- Header Section with Logos -->
+    <header class="flex justify-between items-center mb-12 flex-wrap gap-4">
+      <!-- Left Logo - Updated src to point to your assets folder and increased size -->
+      <a href="https://www.bvmengineering.ac.in/TSA/index.html" target="_blank">
+        <img src="assets/tsa_logo.png" alt="The Space Association Logo" class="h-32 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x128/374151/D1D5DB?text=TSA+Logo';">
+      </a>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center flex-grow">NIMBUS Project</h1>
+      <!-- Right Logo - Updated src to point to your assets folder and increased size -->
+      <a href="https://www.bvmengineering.ac.in/" target="_blank">
+        <img src="assets/bvm_logo.png" alt="BVM College Logo" class="h-32 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x128/374151/D1D5DB?text=BVM+Logo';">
+      </a>
+    </header>
+
+    <!-- Navigation Links -->
+    <nav class="text-center mb-12 flex justify-center space-x-4 flex-wrap">
+      <a href="index.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-xl transition-colors duration-300 shadow-lg">
+        Home
+      </a>
+      <a href="team.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-xl transition-colors duration-300 shadow-lg">
+        Our Team
+      </a>
+      <a href="blogs.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-xl transition-colors duration-300 shadow-lg">
+        Blogs/News
+      </a>
+      <a href="dashboard.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-xl transition-colors duration-300 shadow-lg">
+        Go to Dashboard
+      </a>
+    </nav>
+
+    <!-- Blog Post Content -->
+    <section class="bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Real-time Data Streaming Achieved</h2>
+      <p class="text-gray-400 text-sm mb-6">Published on: June 15, 2025</p>
+      
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-4">
+        Our data visualization dashboard is now receiving real-time telemetry from NIMBUS Alpha! This breakthrough allows us to monitor atmospheric conditions and system health continuously. This is a crucial step towards providing actionable environmental insights.
+      </p>
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-4">
+        The integration of our ground station with the balloon-borne system's data downlink has been a complex but rewarding process. We've successfully established a stable communication link, enabling a continuous flow of sensor data directly to our servers and then to the live dashboard. This means we can now see changes in environmental parameters as they happen.
+      </p>
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-4">
+        This real-time capability is vital for immediate analysis and decision-making, especially for critical environmental monitoring. For instance, we can track rapid shifts in ozone levels or sudden drops in pressure, which could indicate significant atmospheric events. The dashboard provides an intuitive interface for visualizing these dynamic data streams, allowing both our team and potential collaborators to quickly grasp environmental trends.
+      </p>
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg">
+        Future updates will include more advanced data processing and predictive analytics features, building upon this foundational real-time streaming capability. We are excited about the potential for this system to contribute to a deeper understanding of our planet's atmosphere.
+      </p>
+      
+      <div class="mt-8">
+        <a href="blogs.html" class="text-indigo-400 hover:text-indigo-300 font-medium">&larr; Back to Blogs/News</a>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="bg-gray-800 text-gray-400 text-center p-4 mt-8">
+    <p>&copy; 2025 NIMBUS Project. All rights reserved.</p>
+  </footer>
+</body>
+</html>

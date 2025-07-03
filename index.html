@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIMBUS Project - Home</title>
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Inter font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #111827; /* Tailwind gray-900 */
+      color: #D1D5DB; /* Tailwind gray-300 */
+    }
+    /* Splash screen styles */
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #111827; /* Dark background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000; /* Ensure it's on top */
+      transition: opacity 1s ease-out; /* Smooth fade-out */
+    }
+    .splash-screen.hidden {
+      opacity: 0;
+      pointer-events: none; /* Make content clickable after fade */
+    }
+    .splash-logo {
+      animation: pulse 2s infinite; /* Simple pulsing animation */
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col">
+
+  <!-- Splash Screen (Main Loading Logo) -->
+  <div id="splash-screen" class="splash-screen">
+    <!-- Updated src to point to your assets folder -->
+    <img src="assets/skysat_logo.png" alt="NIMBUS Logo" class="splash-logo w-48 h-48 rounded-lg shadow-lg" onerror="this.onerror=null; this.src='https://placehold.co/200x200/374151/D1D5DB?text=NIMBUS+Logo';">
+  </div>
+
+  <div class="container mx-auto p-4 md:p-8 flex-grow">
+    <!-- Header Section with Logos -->
+    <header class="flex justify-between items-center mb-12 flex-wrap gap-4">
+      <!-- Left Logo - Updated src to point to your assets folder and increased size, added href -->
+      <a href="https://www.bvmengineering.ac.in/TSA/index.html" target="_blank">
+        <img src="assets/tsa_logo.png" alt="The Space Association Logo" class="h-32 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x128/374151/D1D5DB?text=TSA+Logo';">
+      </a>
+      <div class="flex flex-col items-center flex-grow">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center">NIMBUS</h1>
+        <p class="text-gray-400 text-sm md:text-base text-center mt-2">
+          <span class="font-bold">N</span>ear-space <span class="font-bold">I</span>nstrumentation for <span class="font-bold">M</span>eteorological <span class="font-bold">B</span>alloon <span class="font-bold">U</span>nderstanding <span class="font-bold">S</span>ystem
+        </p>
+      </div>
+      <!-- Right Logo - Updated src to point to your assets folder and increased size, added href -->
+      <a href="https://www.bvmengineering.ac.in/" target="_blank">
+        <img src="assets/bvm_logo.png" alt="BVM College Logo" class="h-32 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x128/374151/D1D5DB?text=BVM+Logo';">
+      </a>
+    </header>
+
+    <!-- Navigation Links -->
+    <nav class="text-center mb-12 flex justify-center space-x-4 flex-wrap">
+      <a href="index.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-xl transition-colors duration-300 shadow-lg">
+        Home
+      </a>
+      <a href="team.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-xl transition-colors duration-300 shadow-lg">
+        Our Team
+      </a>
+      <a href="blogs.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-xl transition-colors duration-300 shadow-lg">
+        Blogs/News
+      </a>
+      <a href="dashboard.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-xl transition-colors duration-300 shadow-lg">
+        Go to Dashboard
+      </a>
+    </nav>
+
+    <!-- Latest News/Announcements Section -->
+    <section class="bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 mb-12">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">Latest News & Announcements</h2>
+      <div class="bg-gray-700 p-4 rounded-lg">
+        <h3 class="text-xl font-semibold text-white mb-2">NIMBUS Alpha Launch Success!</h3>
+        <p class="text-gray-400 text-sm mb-3">Published on: July 1, 2025</p>
+        <p class="text-gray-300 leading-relaxed mb-4">
+          We are thrilled to announce the successful launch of NIMBUS Alpha, our first prototype satellite! This marks a significant milestone for the project, allowing us to begin preliminary data collection and validate our core systems. The team worked tirelessly to ensure a smooth deployment.
+        </p>
+        <a href="blog1.html" class="text-blue-400 hover:text-blue-300 font-medium">Read Full Blog Post &rarr;</a>
+      </div>
+      <div class="text-center mt-6">
+        <a href="blogs.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 shadow-md">
+          View All News
+        </a>
+      </div>
+    </section>
+
+    <!-- Introduction to NIMBUS Project -->
+    <section class="bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 mb-12">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">Introduction to NIMBUS</h2>
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-4">
+        The **NIMBUS (Near-space Instrumentation for Meteorological Balloon Understanding System)** project is an innovative initiative focused on real-time atmospheric data monitoring and environmental sensing through an advanced balloon-borne system. Utilizing cutting-edge technology, NIMBUS aims to provide valuable insights into air quality, meteorological conditions, and various environmental parameters. This platform visualizes complex data streams, making them accessible and understandable for researchers, students, and the wider community.
+      </p>
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg">
+        Our mission is to advance scientific understanding, promote STEM education, and develop sustainable solutions for environmental challenges through robust data collection and intuitive visualization tools. NIMBUS represents a significant step forward in earth observation and atmospheric research.
+      </p>
+    </section>
+
+    <!-- Details about The Space Association (TSA) -->
+    <section class="bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 mb-12">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">About The Space Association (TSA)</h2>
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-4">
+        **The Space Association (TSA)** is a pioneering organization dedicated to fostering interest and innovation in space science and technology. We believe in empowering the next generation of space explorers, engineers, and scientists through hands-on projects, educational programs, and collaborative research. TSA actively promotes aerospace workshops, rocketry competitions, and satellite design challenges, providing a dynamic platform for students and professionals to connect and contribute to the rapidly evolving space industry.
+      </p>
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg">
+        Our partnership with the NIMBUS project underscores our commitment to the practical application of scientific principles and to inspiring future advancements in space exploration and earth observation. TSA plays a crucial role in mentorship and resource mobilization for student-led initiatives.
+      </p>
+    </section>
+
+    <!-- Details about BVM College -->
+    <section class="bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 mb-12">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">About BVM College</h2>
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg mb-4">
+        **Birla Vishvakarma Mahavidyalaya (BVM) Engineering College**, a premier institution established in 1948, is renowned for its academic excellence and commitment to producing skilled engineers and innovators. Located in Anand, Gujarat, BVM offers a wide range of undergraduate and postgraduate programs across various engineering disciplines, including Electronics, Computer, Civil, and Mechanical Engineering. The college emphasizes a holistic approach to education, blending rigorous academics with practical exposure and research opportunities.
+      </p>
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg">
+        BVM's state-of-the-art laboratories, experienced faculty mentorship, and a vibrant research ecosystem are instrumental in the success of projects like NIMBUS, encouraging students to push the boundaries of knowledge and technology.
+      </p>
+    </section>
+
+  </div>
+
+  <footer class="bg-gray-800 text-gray-400 text-center p-4 mt-8">
+    <p>&copy; 2025 NIMBUS Project. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // JavaScript for the splash screen fade-out effect
+    window.addEventListener('load', () => {
+      const splashScreen = document.getElementById('splash-screen');
+      setTimeout(() => {
+        splashScreen.classList.add('hidden'); // Add 'hidden' class to trigger opacity transition
+        // Optional: Remove the splash screen element from the DOM after the transition completes
+        splashScreen.addEventListener('transitionend', () => splashScreen.remove());
+      }, 2000); // The splash screen will stay for 2 seconds before fading out
+    });
+  </script>
+</body>
+</html>
