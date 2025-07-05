@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NIMBUS Project - Blogs & News</title>
-  <!-- Tailwind CSS for styling -->
+  <title>NIMBUS - Blogs & News</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Inter font from Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -21,20 +19,21 @@
 <body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col">
 
   <div class="container mx-auto p-4 md:p-8 flex-grow">
-    <!-- Header Section with Logos -->
     <header class="flex justify-between items-center mb-12 flex-wrap gap-4">
-      <!-- Left Logo - Updated src to point to your assets folder and increased size -->
       <a href="https://www.bvmengineering.ac.in/TSA/index.html" target="_blank">
         <img src="assets/tsa_logo.png" alt="The Space Association Logo" class="h-32 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x128/374151/D1D5DB?text=TSA+Logo';">
       </a>
-      <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center flex-grow">NIMBUS Project</h1>
-      <!-- Right Logo - Updated src to point to your assets folder and increased size -->
+      <div class="flex flex-col items-center flex-grow mx-4">
+        <a href="index.html"> 
+          <img src="assets/nimbus_logo_header.png" alt="NIMBUS Logo" class="h-48 w-auto object-contain mb-2" onerror="this.onerror=null; this.src='https://placehold.co/100x192/374151/D1D5DB?text=NIMBUS+Header';">
+        </a>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center"></h1>
+      </div>
       <a href="https://www.bvmengineering.ac.in/" target="_blank">
         <img src="assets/bvm_logo.png" alt="BVM College Logo" class="h-32 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x128/374151/D1D5DB?text=BVM+Logo';">
       </a>
     </header>
 
-    <!-- Navigation Links -->
     <nav class="text-center mb-12 flex justify-center space-x-4 flex-wrap">
       <a href="index.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-xl transition-colors duration-300 shadow-lg">
         Home
@@ -50,38 +49,37 @@
       </a>
     </nav>
 
-    <!-- Blogs/News Section -->
     <section class="bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 mb-12">
       <h2 class="text-2xl md:text-3xl font-bold text-white mb-8 text-center">Latest Blogs & Achievements</h2>
 
-      <!-- Blog Post 1 Summary -->
+      <!-- Blog Post 3 Summary (Latest) -->
       <div class="bg-gray-700 p-6 rounded-lg mb-6">
-        <h3 class="text-xl md:text-2xl font-semibold text-white mb-2">NIMBUS Alpha Launch Success!</h3>
+        <h3 class="text-xl md:text-2xl font-semibold text-white mb-2">Designing the Future: PCB, 3D Model, and Final Assembly</h3>
         <p class="text-gray-400 text-sm mb-4">Published on: July 1, 2025</p>
         <p class="text-gray-300 leading-relaxed mb-4">
-          We are thrilled to announce the successful launch of NIMBUS Alpha, our first prototype satellite! This marks a significant milestone for the project, allowing us to begin preliminary data collection and validate our core systems. The team worked tirelessly to ensure a smooth deployment.
+          With our breadboard prototype proven, May 2025 saw us dive into the sophisticated world of PCB (Printed Circuit Board) designing and 3D model designing. This phase was about transforming our functional prototype into a compact, robust, and aesthetically pleasing satellite unit.
         </p>
-        <a href="blog1.html" class="text-blue-400 hover:text-blue-300 font-medium">Read More &rarr;</a>
+        <a href="blog3.html" class="text-blue-400 hover:text-blue-300 font-medium">Read More &rarr;</a>
       </div>
 
       <!-- Blog Post 2 Summary -->
       <div class="bg-gray-700 p-6 rounded-lg mb-6">
-        <h3 class="text-xl md:text-2xl font-semibold text-white mb-2">Real-time Data Streaming Achieved</h3>
+        <h3 class="text-xl md:text-2xl font-semibold text-white mb-2">Bridging the Distance: LoRa Communication & System Integration</h3>
         <p class="text-gray-400 text-sm mb-4">Published on: June 15, 2025</p>
         <p class="text-gray-300 leading-relaxed mb-4">
-          Our data visualization dashboard is now receiving real-time telemetry from NIMBUS Alpha! This breakthrough allows us to monitor atmospheric conditions and satellite health continuously. This is a crucial step towards providing actionable environmental insights.
+          With individual components validated, the next major challenge was establishing reliable communication. From April to May 2025, we dedicated significant effort to LoRa (Long Range) communication testing and enhancements. LoRa technology is crucial for our satellite monitoring system, enabling efficient and low-power data transmission over vast distances.
         </p>
         <a href="blog2.html" class="text-blue-400 hover:text-blue-300 font-medium">Read More &rarr;</a>
       </div>
 
-      <!-- Blog Post 3 Summary -->
+      <!-- Blog Post 1 Summary (Oldest) -->
       <div class="bg-gray-700 p-6 rounded-lg mb-6">
-        <h3 class="text-xl md:text-2xl font-semibold text-white mb-2">Collaboration with Local Environmental Agencies</h3>
+        <h3 class="text-xl md:text-2xl font-semibold text-white mb-2">The Genesis of Our Satellite Project</h3>
         <p class="text-gray-400 text-sm mb-4">Published on: May 20, 2025</p>
         <p class="text-gray-300 leading-relaxed mb-4">
-          NIMBUS project is proud to announce its partnership with [Local Environmental Agency Name] to share our collected data for their ongoing research into urban air quality. This collaboration exemplifies our commitment to community impact.
+          It all started in December 2024 when our team came together, brimming with ideas for our satellite monitoring system. This initial phase was all about solidifying our vision, defining our project's purpose, and establishing the groundwork for the exciting journey ahead.
         </p>
-        <a href="blog3.html" class="text-blue-400 hover:text-blue-300 font-medium">Read More &rarr;</a>
+        <a href="blog1.html" class="text-blue-400 hover:text-blue-300 font-medium">Read More &rarr;</a>
       </div>
 
     </section>
